@@ -1,5 +1,5 @@
 import { fileSystem } from './index.js'
-import { getFileSize, hasNoFolders } from './utils.js'
+import { getFileSize, getIconType, hasNoFolders } from './utils.js'
 
 // Function to render the sidebar with the updated logic for arrows and indentations
 export const renderSidebar = () => {
@@ -32,6 +32,11 @@ const renderTreeNode = (parentElement, node, depth) => {
     arrow.textContent = '▼' // Arrow down if expanded
   }
   container.appendChild(arrow)
+
+  const icon = document.createElement('img')
+  icon.src = '../assets/icons/folder.png'
+  icon.classList.add('icon')
+  container.appendChild(icon)
 
   const text = document.createElement('span')
   text.textContent = node.name
@@ -70,7 +75,6 @@ export const renderContent = node => {
   if (node.children) {
     node.children.forEach(child => {
       const tr = document.createElement('tr')
-
       tr.addEventListener('click', () => {
         if (child.type === 'folder') {
           child.expanded = true
@@ -84,6 +88,10 @@ export const renderContent = node => {
       const nameContainer = document.createElement('div')
       nameContainer.classList.add('node-container')
       const nameTd = document.createElement('td')
+      const icon = document.createElement('img')
+      icon.src = `../assets/icons/${getIconType(child)}.png`
+      icon.classList.add('icon')
+      nameContainer.appendChild(icon)
 
       const text = document.createElement('span')
       text.textContent = child.name
