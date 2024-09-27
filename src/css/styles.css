@@ -21,3 +21,40 @@ body {
   flex-grow: 1;
   overflow-y: auto;
 }
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  cursor: pointer;
+  padding: 5px;
+}
+
+li:hover {
+  background-color: #eee;
+}
+
+.arrow {
+  font-size: 10px;
+  margin-right: 5px;
+}
+
+.tree-node {
+  display: flex;
+  align-items: center;
+}
+
+.tree-node .name {
+  flex-grow: 1;
+}
+
+.tree-node .children {
+  list-style-type: none;
+  padding-left: 20px; /* Change this to adjust the indent size */
+}
+
+.tree-node .children li {
+  margin-left: 20px; /* This adds an indent to child items */
+}
