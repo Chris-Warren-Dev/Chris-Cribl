@@ -1,5 +1,5 @@
 import { fileSystem } from './index.js'
-import { hasNoFolders } from './utils.js'
+import { getFileSize, hasNoFolders } from './utils.js'
 
 // Function to render the sidebar with the updated logic for arrows and indentations
 export const renderSidebar = () => {
@@ -22,6 +22,7 @@ const renderTreeNode = (parentElement, node, depth) => {
   li.addEventListener('click', () => {
     node.expanded = !node.expanded
     renderSidebar() // Re-render the sidebar to reflect changes
+    renderContent(node)
   })
 
   const arrow = document.createElement('span')
@@ -46,4 +47,62 @@ const renderTreeNode = (parentElement, node, depth) => {
     node.children.forEach(child => renderTreeNode(ul, child, depth + 1)) // Increase depth for children
     parentElement.appendChild(ul)
   }
+}
+
+export const renderContent = node => {
+  const content = document.getElementById('content')
+  content.innerHTML = ''
+
+  const table = document.createElement('table')
+  const thead = document.createElement('thead')
+  const headings = ['Name', 'Modified', 'Size']
+  const tr = document.createElement('tr')
+
+  headings.forEach(heading => {
+    const th = document.createElement('th')
+    th.textContent = heading
+    tr.appendChild(th)
+  })
+  thead.appendChild(tr)
+  table.appendChild(thead)
+
+  const tbody = document.createElement('tbody')
+  if (node.children) {
+    node.children.forEach(child => {
+      const tr = document.createElement('tr')
+
+      tr.addEventListener('click', () => {
+        if (child.type === 'folder') {
+          child.expanded = true
+          renderContent(child) // Re-render content when clicking on folder
+          renderSidebar() // Re-render when clicking on folder
+        } else {
+          renderContent(node)
+        }
+      })
+
+      const nameContainer = document.createElement('div')
+      nameContainer.classList.add('node-container')
+      const nameTd = document.createElement('td')
+
+      const text = document.createElement('span')
+      text.textContent = child.name
+      nameContainer.appendChild(text)
+
+      nameTd.appendChild(nameContainer)
+      tr.appendChild(nameTd)
+
+      const modifiedTd = document.createElement('td')
+      modifiedTd.textContent = new Date(child.modified).toLocaleString()
+      tr.appendChild(modifiedTd)
+
+      const sizeTd = document.createElement('td')
+      sizeTd.textContent = child.type === 'file' ? getFileSize(child.size) : ''
+      tr.appendChild(sizeTd)
+
+      tbody.appendChild(tr)
+    })
+  }
+  table.appendChild(tbody)
+  content.appendChild(table)
 }

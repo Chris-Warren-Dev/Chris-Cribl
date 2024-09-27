@@ -1,5 +1,5 @@
 import { fetchFileSystem } from './api.js'
-import { renderSidebar } from './ui.js'
+import { renderSidebar, renderContent } from './ui.js'
 
 export let fileSystem = []
 document.addEventListener('DOMContentLoaded', async () => {
@@ -8,4 +8,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     fileSystem[0].expanded = true // Start with the root folder expanded
   }
   renderSidebar()
+  renderContent(fileSystem[0])
 })

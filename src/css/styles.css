@@ -36,6 +36,29 @@ li:hover {
   background-color: #eee;
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+tr:hover {
+  background-color: #eee;
+}
+
+thead tr {
+  border-bottom: 1px solid #ccc;
+}
+
+th {
+  color: #aaa;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+
 .arrow {
   font-size: 10px;
   margin-right: 5px;
@@ -57,4 +80,10 @@ li:hover {
 
 .tree-node .children li {
   margin-left: 20px; /* This adds an indent to child items */
+}
+
+.node-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
