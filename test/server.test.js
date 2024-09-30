@@ -1,5 +1,5 @@
 import request from 'supertest'
-import app from '../../server.cjs'
+import app from '../server.cjs'
 
 describe('GET /api/filesystem', () => {
   it('should return the file system structure', async () => {

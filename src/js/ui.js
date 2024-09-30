@@ -13,7 +13,7 @@ export const renderSidebar = () => {
 }
 
 const renderTreeNode = (parentElement, node, depth) => {
-  if (node.type === 'file') return // Skip files
+  if (node.type === 'file') return // Do not show files in the sidebar
 
   const li = document.createElement('li')
   li.classList.add('tree-node')
