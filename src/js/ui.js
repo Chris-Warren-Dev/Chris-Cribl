@@ -1,6 +1,8 @@
 import { fileSystem } from './index.js'
 import { getFileSize, getIconType, hasNoFolders } from './utils.js'
 
+let selectedTreeNodeName = null
+let selectedContentNodeName = null
 // Function to render the sidebar with the updated logic for arrows and indentations
 export const renderSidebar = () => {
   const sidebar = document.getElementById('sidebar')
@@ -15,12 +17,16 @@ const renderTreeNode = (parentElement, node, depth) => {
 
   const li = document.createElement('li')
   li.classList.add('tree-node')
+  if (selectedTreeNodeName === node.name) {
+    li.classList.add('selected')
+  }
 
   const container = document.createElement('div')
   container.classList.add('node-container')
   container.style.marginLeft = `${depth * 20}px` // Indent based on depth
   li.addEventListener('click', () => {
     node.expanded = !node.expanded
+    selectedTreeNodeName = node.name
     renderSidebar() // Re-render the sidebar to reflect changes
     renderContent(node)
   })
@@ -75,12 +81,16 @@ export const renderContent = node => {
   if (node.children) {
     node.children.forEach(child => {
       const tr = document.createElement('tr')
+      if (selectedContentNodeName === child.name) {
+        tr.classList.add('selected')
+      }
       tr.addEventListener('click', () => {
         if (child.type === 'folder') {
           child.expanded = true
           renderContent(child) // Re-render content when clicking on folder
           renderSidebar() // Re-render when clicking on folder
         } else {
+          selectedContentNodeName = child.name
           renderContent(node)
         }
       })

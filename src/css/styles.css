@@ -88,6 +88,10 @@ td {
   margin-left: 20px; /* This adds an indent to child items */
 }
 
+.selected {
+  background-color: #eee;
+}
+
 .node-container {
   display: flex;
   align-items: center;
