@@ -88,6 +88,8 @@ export const renderContent = node => {
         if (child.type === 'folder') {
           child.expanded = true
           renderContent(child) // Re-render content when clicking on folder
+          node.expanded = true
+          selectedTreeNodeName = child.name
           renderSidebar() // Re-render when clicking on folder
         } else {
           selectedContentNodeName = child.name
